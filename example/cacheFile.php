@@ -1,0 +1,1 @@
+<?php return 'a:2:{i:0;a:0:{}i:1;a:1:{s:3:"GET";a:1:{i:0;a:4:{i:0;s:14:"/user/{id:\d+}";i:1;i:0;i:2;s:7:"handler";i:3;a:1:{i:0;s:2:"id";}}}}}';
