@@ -12,11 +12,11 @@ composer require constanze-standard/routing
 
 ## 开始使用
 
-### 路由集合 (RouteCollection)
 routing 有两个概念：
 1. `RouteCollection` 路由表数据的集合，负责收集 URL 匹配的信息。
 2. `Matcher` 负责将请求数据和路由表进行匹配，并返回匹配结果。
 
+### 路由集合 (RouteCollection)
 使用 `RouteCollection` 添加一条路由数据：
 ```php
 use ConstanzeStandard\Routing\RouteCollection;
