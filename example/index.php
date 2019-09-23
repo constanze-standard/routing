@@ -6,15 +6,17 @@ use ConstanzeStandard\Routing\RouteCollection;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$collection = new RouteCollection(__DIR__ . '/cacheFile.php');
+$collection = new RouteCollection();
 
-$collection->add('GET', '/user/{id:\d+}', 'handler', ['name' => 'user.id']);
+$collection->add('GET', '/user/{name}', 'handler', ['name' => 'user.id']);
+$collection->add('GET', '/users/{name}', 'handler', ['name' => 'user.id']);
+$collection->add('GET', '/userss/{name}', 'handler', ['name' => 'user.id']);
 
 // $cache = new Cache($collection, __DIR__ . '/cacheFile.php');
-$collection->cache();
+// $collection->cache();
 
 $matcher = new Matcher($collection);
 
-$result = $matcher->match('get', '/user/12');
+$result = $matcher->match('GET', '/userss/12');
 
 print_r($result);

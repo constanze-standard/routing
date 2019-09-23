@@ -87,7 +87,7 @@ class Matcher implements MatcherInterface
                             static::STATUS_OK,
                             $serializable,
                             $this->routeCollection->getUnserializableById($unserializableId),
-                            array_combine($arguments, array_slice($matches, 1))
+                            array_combine($arguments, array_slice($matches, 1, count($arguments)))
                         ];
                     }
                     $allowedMethods[] = $allowedMethod;
