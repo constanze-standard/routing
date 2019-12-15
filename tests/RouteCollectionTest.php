@@ -57,7 +57,8 @@ class RouteCollectionTest extends AbstractTest
     public function testCacheWithTrue()
     {
         $file = __DIR__ . '/cache_file';
-        $collection = new RouteCollection($file);
+        $collection = new RouteCollection();
+        $collection->loadCache($file);
         $result = $collection->cache();
         $this->assertTrue($result);
         $this->assertFileExists($file);
@@ -71,42 +72,15 @@ class RouteCollectionTest extends AbstractTest
     {
         mkdir(__DIR__ . '/tmp', '0000');
         $file = __DIR__ . '/tmp/cache_file';
-        $collection = new RouteCollection($file);
+        $collection = new RouteCollection();
         try {
+            $collection->loadCache($file);
             $collection->cache();
         } catch (\Throwable $e) {
             chmod(__DIR__ . '/tmp', '0755');
             rmdir(__DIR__ . '/tmp');
             throw $e;
         }
-    }
-
-    public function testLoadCache()
-    {
-        $file = __DIR__ . '/cache_file';
-        $collection = new RouteCollection($file);
-        $collection->add('get', '/foo', 'serializable', 'unserializable');
-        $collection->add('get', '/foo/{id:\d+}', 'serializable', 'unserializable');
-        $result = $collection->cache();
-        $this->callMethod($collection, 'loadCache', [$file]);
-
-
-        $collection = new RouteCollection($file);
-        $contents = $collection->getContents();
-
-        $this->assertEquals($contents, [
-            [
-                'GET' => [
-                    ['/foo', 0, 'serializable', []]
-                ]
-            ],
-            [
-                'GET' => [
-                    ['/foo/{id:\d+}', 1, 'serializable', ['id']]
-                ]
-            ]
-        ]);
-        unlink($file);
     }
 
     /**

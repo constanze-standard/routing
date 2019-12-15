@@ -52,7 +52,7 @@ class RouteCollection implements RouteCollectionInterface
      * 
      * @var string|null
      */
-    private $cacheFile;
+    private $cacheFile = null;
 
     /**
      * The unserializables index counter.
@@ -109,15 +109,6 @@ class RouteCollection implements RouteCollectionInterface
     {
         preg_match_all('/{([^\/^:]+)(:.*)?}/', $url, $matched);
         return $matched[1];
-    }
-
-    /**
-     * @param string|null $cacheFile
-     */
-    public function __construct(string $cacheFile = null)
-    {
-        $this->cacheFile = $cacheFile;
-        $this->loadCache($cacheFile);
     }
 
     /**
@@ -187,8 +178,9 @@ class RouteCollection implements RouteCollectionInterface
      * 
      * @return bool
      */
-    private function loadCache($cacheFile)
+    public function loadCache($cacheFile)
     {
+        $this->cacheFile = $cacheFile;
         if ($cacheFile && file_exists($cacheFile)) {
             [$this->statics, $this->variables] = static::getContentsFromCache($cacheFile);
             return true;
