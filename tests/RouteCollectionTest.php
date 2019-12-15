@@ -57,7 +57,7 @@ class RouteCollectionTest extends AbstractTest
     public function testCacheWithTrue()
     {
         $file = __DIR__ . '/cache_file';
-        $collection = new RouteCollection();
+        $collection = new RouteCollection($file);
         $collection->loadCache($file);
         $result = $collection->cache();
         $this->assertTrue($result);
@@ -72,7 +72,7 @@ class RouteCollectionTest extends AbstractTest
     {
         mkdir(__DIR__ . '/tmp', '0000');
         $file = __DIR__ . '/tmp/cache_file';
-        $collection = new RouteCollection();
+        $collection = new RouteCollection($file);
         try {
             $collection->loadCache($file);
             $collection->cache();

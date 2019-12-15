@@ -112,6 +112,14 @@ class RouteCollection implements RouteCollectionInterface
     }
 
     /**
+     * @param string|null $cacheFile
+     */
+    public function __construct(string $cacheFile = null)
+    {
+        $this->cacheFile = $cacheFile;
+    }
+
+    /**
      * Add a url pattern to collection.
      * 
      * @param array|string $method
@@ -167,7 +175,7 @@ class RouteCollection implements RouteCollectionInterface
      */
     public function cache(): bool
     {
-        if ($this->cacheFile && !file_exists($this->cacheFile)) {
+        if ($this->cacheFile) {
             return static::cacheContents($this->cacheFile, $this->getContents());;
         }
         return false;
@@ -178,11 +186,10 @@ class RouteCollection implements RouteCollectionInterface
      * 
      * @return bool
      */
-    public function loadCache($cacheFile)
+    public function loadCache()
     {
-        $this->cacheFile = $cacheFile;
-        if ($cacheFile && file_exists($cacheFile)) {
-            [$this->statics, $this->variables] = static::getContentsFromCache($cacheFile);
+        if ($this->cacheFile && file_exists($this->cacheFile)) {
+            [$this->statics, $this->variables] = static::getContentsFromCache($this->cacheFile);
             return true;
         }
         return false;

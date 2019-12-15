@@ -52,12 +52,17 @@ $result = $matcher->match('GET', '/foo/12');
 ```php
 use ConstanzeStandard\Routing\RouteCollection;
 
-$collection = new RouteCollection(__DIR__ . '/cacheFile.php');
+$file = __DIR__ . '/cacheFile.php';
+$collection = new RouteCollection($file);
 
 $collection->add('GET', '/foo/{bar:\d+}', 'serializable data', 'unserializable data');
 ...
 
-$collection->cache();
+if (file_exists($file)) {
+    $collection->loadCache();
+} else {
+    $collection->cache();
+}
 ```
 在你第一次开启缓存时，首先要确保缓存文件是不存在的。当缓存文件不存在时，`RouteCollection::cache` 会根据收集到的路由数据创建缓存文件，如果缓存文件存在，`RouteCollection` 会直接从缓存文件一次性读取数据，并忽略 `cache` 方法。
 
